@@ -59,18 +59,18 @@ class Single_Renderer
             'dane_podstawowe' => $filter_values([
                 'Data urodzenia' => $profile['data_urodzenia'],
                 'Miejsce urodzenia' => $profile['miejsce_urodzenia'],
-                'Wojewodztwo' => $profile['wojewodztwo'],
-                'Okreg wyborczy' => $profile['okreg_wyborczy'],
+                'Województwo' => $profile['wojewodztwo'],
+                'Okręg wyborczy' => $profile['okreg_wyborczy'],
             ]),
             'mandat' => $filter_values([
                 'Klub parlamentarny' => $profile['klub_parlamentarny'],
                 'Status mandatu' => $profile['status_mandatu'],
-                'Liczba glosow' => $profile['liczba_glosow'],
+                'Liczba głosów' => $profile['liczba_glosow'],
                 'Kadencja' => $profile['kadencja'],
             ]),
             'wyksztalcenie' => $filter_values([
-                'Wyksztalcenie' => $profile['wyksztalcenie'],
-                'Zawod' => $profile['zawod'],
+                'Wykształcenie' => $profile['wyksztalcenie'],
+                'Zawód' => $profile['zawod'],
             ]),
             'komisje' => $profile['komisje_sejmowe'],
             'funkcje' => $profile['funkcje_parlamentarne'],

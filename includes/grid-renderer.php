@@ -245,6 +245,8 @@ class Grid_Renderer
             'total' => (int) $query->max_num_pages,
             'type' => 'list',
             'add_args' => $filter_args,
+            'prev_text' => 'Poprzednia',
+            'next_text' => 'Następna',
         ]);
     }
 

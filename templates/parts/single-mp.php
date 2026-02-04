@@ -18,7 +18,7 @@ $photo = $profile['photo'] ?? [];
 <article class="mp-profile">
     <?php if (!empty($back_link['url'])) : ?>
         <a class="mp-back-link mp-contact-link mp-contact-link--profile" href="<?php echo esc_url($back_link['url']); ?>">
-            Powrot
+            Powrót
         </a>
     <?php endif; ?>
     <header class="mp-profile__header">
@@ -52,7 +52,7 @@ $photo = $profile['photo'] ?? [];
                 <p class="mp-profile__meta"><span>Klub:</span> <?php echo esc_html($profile['klub_parlamentarny']); ?></p>
             <?php endif; ?>
             <?php if (!empty($profile['okreg_wyborczy'])) : ?>
-                <p class="mp-profile__meta"><span>Okreg:</span> <?php echo esc_html($profile['okreg_wyborczy']); ?></p>
+                <p class="mp-profile__meta"><span>Okręg:</span> <?php echo esc_html($profile['okreg_wyborczy']); ?></p>
             <?php endif; ?>
         </div>
     </header>
@@ -87,7 +87,7 @@ $photo = $profile['photo'] ?? [];
 
     <?php if (!empty($wyksztalcenie)) : ?>
         <section class="mp-profile__section">
-            <h2>Wyksztalcenie i zawod</h2>
+            <h2>Wykształcenie i zawód</h2>
             <dl class="mp-profile__details">
                 <?php foreach ($wyksztalcenie as $label => $value) : ?>
                     <div>
@@ -101,7 +101,7 @@ $photo = $profile['photo'] ?? [];
 
     <?php if (!empty($komisje) || !empty($funkcje)) : ?>
         <section class="mp-profile__section">
-            <h2>Aktywnosc parlamentarna</h2>
+            <h2>Aktywność parlamentarna</h2>
             <?php if (!empty($komisje)) : ?>
                 <h3>Komisje sejmowe</h3>
                 <ul class="mp-profile__list">

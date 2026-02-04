@@ -85,9 +85,9 @@ class Template_Tags
 
         $parts = array_filter([
             $profile['klub_parlamentarny'] ? 'Klub: ' . $profile['klub_parlamentarny'] : '',
-            $profile['okreg_wyborczy'] ? 'Okreg: ' . $profile['okreg_wyborczy'] : '',
-            $profile['zawod'] ? 'Zawod: ' . $profile['zawod'] : '',
-            $profile['wyksztalcenie'] ? 'Wyksztalcenie: ' . $profile['wyksztalcenie'] : '',
+            $profile['okreg_wyborczy'] ? 'Okręg: ' . $profile['okreg_wyborczy'] : '',
+            $profile['zawod'] ? 'Zawód: ' . $profile['zawod'] : '',
+            $profile['wyksztalcenie'] ? 'Wykształcenie: ' . $profile['wyksztalcenie'] : '',
         ]);
 
         $text = $profile['pelne_imie_i_nazwisko'] ?: get_the_title($post_id);
@@ -112,7 +112,7 @@ class Template_Tags
             'image' => $profile['photo_url'],
             'affiliation' => $profile['klub_parlamentarny'],
             'email' => $profile['email'] ? 'mailto:' . $profile['email'] : '',
-            'jobTitle' => 'Posel na Sejm',
+            'jobTitle' => 'Poseł na Sejm',
             'url' => get_permalink($post_id),
         ];
 
