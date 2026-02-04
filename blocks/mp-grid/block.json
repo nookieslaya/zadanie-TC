@@ -1,0 +1,32 @@
+{
+  "apiVersion": 2,
+  "name": "mp-importer/mp-grid",
+  "title": "MPs Grid",
+  "category": "widgets",
+  "icon": "id",
+  "description": "Displays a grid of Members of Parliament.",
+  "textdomain": "mp-importer",
+  "attributes": {
+    "postsPerPage": {
+      "type": "number",
+      "default": 12
+    },
+    "enablePagination": {
+      "type": "boolean",
+      "default": true
+    },
+    "enableFilters": {
+      "type": "boolean",
+      "default": true
+    },
+    "limit": {
+      "type": "number"
+    }
+  },
+  "supports": {
+    "html": false
+  },
+  "editorScript": "mp-importer-mp-grid-editor",
+  "style": "mp-importer",
+  "editorStyle": "mp-importer"
+}
