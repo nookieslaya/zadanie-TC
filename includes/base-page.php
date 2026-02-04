@@ -1,11 +1,17 @@
 <?php
 
-namespace MP_Importer;
+namespace WP_Sejm_API;
 
 class Base_Page
 {
-    protected const OPTION_ID = 'mp_importer_base_page_id';
-    protected const OPTION_SLUG = 'mp_importer_base_slug';
+    protected const OPTION_ID = 'wp_sejm_api_base_page_id';
+    protected const OPTION_SLUG = 'wp_sejm_api_base_slug';
+    protected const OPTION_FLUSH = 'wp_sejm_api_flush_rewrite';
+    protected const OPTION_REWRITE_VERSION = 'wp_sejm_api_rewrite_version';
+    protected const LEGACY_OPTION_ID = 'mp_importer_base_page_id';
+    protected const LEGACY_OPTION_SLUG = 'mp_importer_base_slug';
+    protected const LEGACY_OPTION_FLUSH = 'mp_importer_flush_rewrite';
+    protected const LEGACY_OPTION_REWRITE_VERSION = 'mp_importer_rewrite_version';
     protected const REWRITE_VERSION = 2;
 
     public static function init(): void
@@ -21,12 +27,19 @@ class Base_Page
 
     public static function get_base_page_id(): int
     {
-        $filtered = (int) apply_filters('mp_importer_base_page_id', 0);
+        $filtered = (int) apply_filters('wp_sejm_api_base_page_id', (int) apply_filters('mp_importer_base_page_id', 0));
         if ($filtered > 0) {
             return $filtered;
         }
 
         $stored = (int) get_option(self::OPTION_ID, 0);
+        if ($stored < 1) {
+            $legacy = (int) get_option(self::LEGACY_OPTION_ID, 0);
+            if ($legacy > 0) {
+                update_option(self::OPTION_ID, $legacy, false);
+                $stored = $legacy;
+            }
+        }
         if ($stored > 0 && get_post_status($stored) === 'publish') {
             return $stored;
         }
@@ -43,6 +56,13 @@ class Base_Page
     public static function get_base_slug(): string
     {
         $stored = (string) get_option(self::OPTION_SLUG, '');
+        if ($stored === '') {
+            $legacy = (string) get_option(self::LEGACY_OPTION_SLUG, '');
+            if ($legacy !== '') {
+                update_option(self::OPTION_SLUG, $legacy, false);
+                $stored = $legacy;
+            }
+        }
         if ($stored !== '') {
             return $stored;
         }
@@ -93,7 +113,7 @@ class Base_Page
             return;
         }
 
-        $has_block = has_block('mp-importer/mp-grid', $post->post_content ?? '');
+        $has_block = self::has_grid_block($post->post_content ?? '');
         if (!$has_block) {
             return;
         }
@@ -110,6 +130,8 @@ class Base_Page
 
         delete_option(self::OPTION_ID);
         delete_option(self::OPTION_SLUG);
+        delete_option(self::LEGACY_OPTION_ID);
+        delete_option(self::LEGACY_OPTION_SLUG);
         flush_rewrite_rules();
     }
 
@@ -130,7 +152,7 @@ class Base_Page
         update_option(self::OPTION_SLUG, $new_slug, false);
 
         if ($current !== $post_id || $current_slug !== $new_slug) {
-            update_option('mp_importer_flush_rewrite', 1, false);
+            update_option(self::OPTION_FLUSH, 1, false);
         }
     }
 
@@ -151,7 +173,7 @@ class Base_Page
 
         foreach ($pages as $page_id) {
             $content = get_post_field('post_content', $page_id);
-            if (has_block('mp-importer/mp-grid', $content)) {
+            if (self::has_grid_block($content)) {
                 return (int) $page_id;
             }
         }
@@ -161,24 +183,40 @@ class Base_Page
 
     public static function maybe_flush_rewrite(): void
     {
-        $should_flush = (int) get_option('mp_importer_flush_rewrite', 0);
+        $should_flush = (int) get_option(self::OPTION_FLUSH, 0);
+        if ($should_flush !== 1) {
+            $legacy_flush = (int) get_option(self::LEGACY_OPTION_FLUSH, 0);
+            if ($legacy_flush === 1) {
+                update_option(self::OPTION_FLUSH, 1, false);
+                delete_option(self::LEGACY_OPTION_FLUSH);
+                $should_flush = 1;
+            }
+        }
         if ($should_flush !== 1) {
             return;
         }
 
-        delete_option('mp_importer_flush_rewrite');
+        delete_option(self::OPTION_FLUSH);
         flush_rewrite_rules();
     }
 
     public static function maybe_upgrade_rewrite(): void
     {
-        $version = (int) get_option('mp_importer_rewrite_version', 0);
+        $version = (int) get_option(self::OPTION_REWRITE_VERSION, 0);
+        if ($version < 1) {
+            $legacy_version = (int) get_option(self::LEGACY_OPTION_REWRITE_VERSION, 0);
+            if ($legacy_version > 0) {
+                update_option(self::OPTION_REWRITE_VERSION, $legacy_version, false);
+                delete_option(self::LEGACY_OPTION_REWRITE_VERSION);
+                $version = $legacy_version;
+            }
+        }
         if ($version >= self::REWRITE_VERSION) {
             return;
         }
 
-        update_option('mp_importer_rewrite_version', self::REWRITE_VERSION, false);
-        update_option('mp_importer_flush_rewrite', 1, false);
+        update_option(self::OPTION_REWRITE_VERSION, self::REWRITE_VERSION, false);
+        update_option(self::OPTION_FLUSH, 1, false);
     }
 
     public static function prepend_rewrite_rules(array $rules): array
@@ -207,5 +245,10 @@ class Base_Page
     {
         $vars[] = 'mp_page';
         return $vars;
+    }
+
+    protected static function has_grid_block(string $content): bool
+    {
+        return has_block('wp-sejm-api/mp-grid', $content) || has_block('mp-importer/mp-grid', $content);
     }
 }

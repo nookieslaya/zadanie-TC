@@ -10,7 +10,7 @@
     var Placeholder = wp.components.Placeholder;
     var __ = wp.i18n.__;
 
-    registerBlockType('mp-importer/mp-grid', {
+    registerBlockType('wp-sejm-api/mp-grid', {
         edit: function (props) {
             var attributes = props.attributes || {};
             var postsPerPage = typeof attributes.postsPerPage === 'number' ? attributes.postsPerPage : 12;
@@ -26,9 +26,9 @@
                     {},
                     el(
                         PanelBody,
-                        { title: __('MPs Grid', 'mp-importer'), initialOpen: true },
+                        { title: __('MPs Grid', 'wp-sejm-api'), initialOpen: true },
                         el(RangeControl, {
-                            label: __('Posts per page', 'mp-importer'),
+                            label: __('Posts per page', 'wp-sejm-api'),
                             value: postsPerPage,
                             min: 1,
                             max: 60,
@@ -37,14 +37,14 @@
                             },
                         }),
                         el(ToggleControl, {
-                            label: __('Enable pagination', 'mp-importer'),
+                            label: __('Enable pagination', 'wp-sejm-api'),
                             checked: enablePagination,
                             onChange: function (value) {
                                 props.setAttributes({ enablePagination: value });
                             },
                         }),
                         el(ToggleControl, {
-                            label: __('Enable filters', 'mp-importer'),
+                            label: __('Enable filters', 'wp-sejm-api'),
                             checked: enableFilters,
                             onChange: function (value) {
                                 props.setAttributes({ enableFilters: value });
@@ -57,8 +57,8 @@
                     blockProps,
                     el(Placeholder, {
                         icon: 'id',
-                        label: __('MPs Grid', 'mp-importer'),
-                        instructions: __('Podglad siatki jest dostepny na froncie strony.', 'mp-importer'),
+                        label: __('MPs Grid', 'wp-sejm-api'),
+                        instructions: __('Podglad siatki jest dostepny na froncie strony.', 'wp-sejm-api'),
                     })
                 )
             );

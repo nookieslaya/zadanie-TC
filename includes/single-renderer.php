@@ -1,6 +1,6 @@
 <?php
 
-namespace MP_Importer;
+namespace WP_Sejm_API;
 
 class Single_Renderer
 {
@@ -84,7 +84,7 @@ class Single_Renderer
 
     protected static function render_template(string $relative_path, array $data): string
     {
-        $template = MP_IMPORTER_PATH . 'templates/' . ltrim($relative_path, '/');
+        $template = WP_SEJM_API_PATH . 'templates/' . ltrim($relative_path, '/');
 
         if (!file_exists($template)) {
             return '';

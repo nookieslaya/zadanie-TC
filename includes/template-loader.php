@@ -1,6 +1,6 @@
 <?php
 
-namespace MP_Importer;
+namespace WP_Sejm_API;
 
 class Template_Loader
 {
@@ -26,7 +26,7 @@ class Template_Loader
                 return $theme_template;
             }
 
-            $archive = MP_IMPORTER_PATH . 'templates/archive-mp.php';
+            $archive = WP_SEJM_API_PATH . 'templates/archive-mp.php';
             if (file_exists($archive)) {
                 return $archive;
             }
@@ -38,7 +38,7 @@ class Template_Loader
                 return $theme_template;
             }
 
-            $single = MP_IMPORTER_PATH . 'templates/single-mp.php';
+            $single = WP_SEJM_API_PATH . 'templates/single-mp.php';
             if (file_exists($single)) {
                 return $single;
             }
@@ -54,10 +54,10 @@ class Template_Loader
         }
 
         wp_enqueue_style(
-            'mp-importer',
-            MP_IMPORTER_URL . 'assets/style.css',
+            'wp-sejm-api',
+            WP_SEJM_API_URL . 'assets/style.css',
             [],
-            MP_IMPORTER_VERSION
+            WP_SEJM_API_VERSION
         );
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace MP_Importer;
+namespace WP_Sejm_API;
 
 class SEO
 {

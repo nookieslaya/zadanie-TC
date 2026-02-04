@@ -1,6 +1,6 @@
 <?php
 
-namespace MP_Importer;
+namespace WP_Sejm_API;
 
 class Admin_Page
 {
@@ -10,6 +10,11 @@ class Admin_Page
     {
         add_action('admin_menu', [__CLASS__, 'register_menu']);
         add_action('admin_enqueue_scripts', [__CLASS__, 'enqueue_assets']);
+        add_action('admin_post_wp_sejm_api_run', [__CLASS__, 'handle_import']);
+        add_action('wp_ajax_wp_sejm_api_start', [__CLASS__, 'ajax_start']);
+        add_action('wp_ajax_wp_sejm_api_step', [__CLASS__, 'ajax_step']);
+
+        // Backward compatibility for the previous mp-importer identifiers.
         add_action('admin_post_mp_importer_run', [__CLASS__, 'handle_import']);
         add_action('wp_ajax_mp_importer_start', [__CLASS__, 'ajax_start']);
         add_action('wp_ajax_mp_importer_step', [__CLASS__, 'ajax_step']);
@@ -19,10 +24,10 @@ class Admin_Page
     {
         self::$hook_suffix = add_submenu_page(
             'edit.php?post_type=mp',
-            'MP Importer',
-            'MP Importer',
+            'WordPress Sejm API',
+            'WordPress Sejm API',
             'manage_options',
-            'mp-importer',
+            'wp-sejm-api',
             [__CLASS__, 'render_page']
         );
     }
@@ -34,23 +39,23 @@ class Admin_Page
         }
 
         wp_enqueue_style(
-            'mp-importer-admin',
-            MP_IMPORTER_URL . 'assets/admin.css',
+            'wp-sejm-api-admin',
+            WP_SEJM_API_URL . 'assets/admin.css',
             [],
-            MP_IMPORTER_VERSION
+            WP_SEJM_API_VERSION
         );
 
         wp_enqueue_script(
-            'mp-importer-admin',
-            MP_IMPORTER_URL . 'assets/admin.js',
+            'wp-sejm-api-admin',
+            WP_SEJM_API_URL . 'assets/admin.js',
             [],
-            MP_IMPORTER_VERSION,
+            WP_SEJM_API_VERSION,
             true
         );
 
-        wp_localize_script('mp-importer-admin', 'MPImporterAdmin', [
+        $settings = [
             'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('mp_importer_ajax'),
+            'nonce' => wp_create_nonce('wp_sejm_api_ajax'),
             'batchSize' => 15,
             'strings' => [
                 'starting' => 'Starting import...',
@@ -58,7 +63,11 @@ class Admin_Page
                 'done' => 'Import complete.',
                 'error' => 'Import failed. Please try again.',
             ],
-        ]);
+        ];
+
+        wp_localize_script('wp-sejm-api-admin', 'WPSejmApiAdmin', $settings);
+        // Legacy global to avoid issues with cached admin.js.
+        wp_localize_script('wp-sejm-api-admin', 'MPImporterAdmin', $settings);
     }
 
     public static function render_page(): void
@@ -69,8 +78,8 @@ class Admin_Page
 
         $notice = self::get_notice();
 
-        echo '<div class="wrap mp-importer-admin">';
-        echo '<h1>MP Importer</h1>';
+        echo '<div class="wrap wp-sejm-api-admin">';
+        echo '<h1>WordPress Sejm API</h1>';
         echo '<p>Import Members of Parliament from the public Sejm API into the MP custom post type.</p>';
         echo '<p>Run this manually whenever you want to refresh the dataset.</p>';
 
@@ -80,22 +89,22 @@ class Admin_Page
             echo '</p></div>';
         }
 
-        echo '<div class="mp-importer-actions">';
-        echo '<button type="button" class="button button-primary" id="mp-importer-run">Import / Refresh MPs</button>';
+        echo '<div class="wp-sejm-api-actions">';
+        echo '<button type="button" class="button button-primary" id="wp-sejm-api-run">Import / Refresh MPs</button>';
         echo '</div>';
 
-        echo '<div id="mp-importer-progress" class="mp-progress" hidden>';
+        echo '<div id="wp-sejm-api-progress" class="mp-progress" hidden>';
         echo '<div class="mp-progress__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">';
         echo '<span class="mp-progress__bar-fill"></span>';
         echo '</div>';
-        echo '<div class="mp-progress__label" id="mp-importer-progress-label">0%</div>';
-        echo '<div class="mp-progress__status" id="mp-importer-status"></div>';
+        echo '<div class="mp-progress__label" id="wp-sejm-api-progress-label">0%</div>';
+        echo '<div class="mp-progress__status" id="wp-sejm-api-status"></div>';
         echo '</div>';
 
         echo '<noscript>';
         echo '<form method="post" action="' . esc_url(admin_url('admin-post.php')) . '">';
-        echo '<input type="hidden" name="action" value="mp_importer_run" />';
-        wp_nonce_field('mp_importer_run');
+        echo '<input type="hidden" name="action" value="wp_sejm_api_run" />';
+        wp_nonce_field('wp_sejm_api_run');
         submit_button('Import / Refresh MPs');
         echo '</form>';
         echo '</noscript>';
@@ -103,8 +112,8 @@ class Admin_Page
         echo '<hr />';
         echo '<h2>Notes</h2>';
         echo '<ul style="list-style: disc; padding-left: 20px;">';
-        echo '<li>MP Importer registers the MP custom post type and ACF fields automatically.</li>';
-        echo '<li>You can change the Sejm term via the mp_importer_term filter.</li>';
+        echo '<li>WordPress Sejm API registers the MP custom post type and ACF fields automatically.</li>';
+        echo '<li>You can change the Sejm term via the wp_sejm_api_term filter.</li>';
         echo '<li>Drafts are created for inactive MPs.</li>';
         echo '</ul>';
         echo '</div>';
@@ -116,7 +125,10 @@ class Admin_Page
             wp_die('You are not allowed to run this import.');
         }
 
-        check_admin_referer('mp_importer_run');
+        $nonce = isset($_POST['_wpnonce']) ? sanitize_text_field((string) $_POST['_wpnonce']) : '';
+        if ($nonce === '' || (!wp_verify_nonce($nonce, 'wp_sejm_api_run') && !wp_verify_nonce($nonce, 'mp_importer_run'))) {
+            wp_die('Invalid request.');
+        }
 
         if (function_exists('set_time_limit')) {
             @set_time_limit(0);
@@ -152,7 +164,9 @@ class Admin_Page
             wp_send_json_error(['message' => 'Permission denied.'], 403);
         }
 
-        check_ajax_referer('mp_importer_ajax', 'nonce');
+        if (!self::verify_ajax_nonce()) {
+            wp_send_json_error(['message' => 'Invalid request.'], 403);
+        }
 
         $api = new Api_Client();
         $list = $api->get_mps();
@@ -196,7 +210,9 @@ class Admin_Page
             wp_send_json_error(['message' => 'Permission denied.'], 403);
         }
 
-        check_ajax_referer('mp_importer_ajax', 'nonce');
+        if (!self::verify_ajax_nonce()) {
+            wp_send_json_error(['message' => 'Invalid request.'], 403);
+        }
 
         $token = isset($_POST['token']) ? sanitize_text_field((string) $_POST['token']) : '';
 
@@ -274,31 +290,42 @@ class Admin_Page
 
     protected static function state_key(string $token): string
     {
-        return 'mp_importer_state_' . $token;
+        return 'wp_sejm_api_state_' . $token;
     }
 
     protected static function menu_url(): string
     {
-        return (string) menu_page_url('mp-importer', false);
+        return (string) menu_page_url('wp-sejm-api', false);
     }
 
     protected static function set_notice(array $notice): void
     {
         $user_id = get_current_user_id();
-        set_transient('mp_importer_notice_' . $user_id, $notice, 60);
+        set_transient('wp_sejm_api_notice_' . $user_id, $notice, 60);
     }
 
     protected static function get_notice(): ?array
     {
         $user_id = get_current_user_id();
-        $notice = get_transient('mp_importer_notice_' . $user_id);
+        $notice = get_transient('wp_sejm_api_notice_' . $user_id);
 
         if (!$notice) {
             return null;
         }
 
-        delete_transient('mp_importer_notice_' . $user_id);
+        delete_transient('wp_sejm_api_notice_' . $user_id);
 
         return is_array($notice) ? $notice : null;
+    }
+
+    protected static function verify_ajax_nonce(): bool
+    {
+        $nonce = isset($_POST['nonce']) ? sanitize_text_field((string) $_POST['nonce']) : '';
+
+        if ($nonce === '') {
+            return false;
+        }
+
+        return wp_verify_nonce($nonce, 'wp_sejm_api_ajax') || wp_verify_nonce($nonce, 'mp_importer_ajax');
     }
 }

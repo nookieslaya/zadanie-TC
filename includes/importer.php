@@ -1,7 +1,7 @@
 <?php
 
 
-namespace MP_Importer;
+namespace WP_Sejm_API;
 
 use WP_Error;
 
@@ -77,7 +77,12 @@ class Importer
 
             $post_id = $this->find_post_id($mp_id);
             $post_data = $this->build_post_data($details, $post_id);
-            $post_data = apply_filters('mp_importer_post_data', $post_data, $details, $post_id);
+            $post_data = apply_filters(
+                'wp_sejm_api_post_data',
+                apply_filters('mp_importer_post_data', $post_data, $details, $post_id),
+                $details,
+                $post_id
+            );
 
             if ($post_id) {
                 $post_data['ID'] = $post_id;
@@ -235,7 +240,12 @@ class Importer
             'source_url' => $this->api->build_url('MP/' . $mp_id),
         ];
 
-        $fields = apply_filters('mp_importer_mapped_fields', $fields, $details, $post_id);
+        $fields = apply_filters(
+            'wp_sejm_api_mapped_fields',
+            apply_filters('mp_importer_mapped_fields', $fields, $details, $post_id),
+            $details,
+            $post_id
+        );
 
         foreach ($fields as $key => $value) {
             $this->update_field_value($post_id, $key, $value);
@@ -285,13 +295,23 @@ class Importer
 
     protected function maybe_set_thumbnail(int $post_id, int $mp_id): void
     {
-        $should_set = (bool) apply_filters('mp_importer_set_featured_image', true, $post_id, $mp_id);
+        $should_set = (bool) apply_filters(
+            'wp_sejm_api_set_featured_image',
+            apply_filters('mp_importer_set_featured_image', true, $post_id, $mp_id),
+            $post_id,
+            $mp_id
+        );
 
         if (!$should_set) {
             return;
         }
 
-        $overwrite = (bool) apply_filters('mp_importer_overwrite_thumbnails', false, $post_id, $mp_id);
+        $overwrite = (bool) apply_filters(
+            'wp_sejm_api_overwrite_thumbnails',
+            apply_filters('mp_importer_overwrite_thumbnails', false, $post_id, $mp_id),
+            $post_id,
+            $mp_id
+        );
 
         if (has_post_thumbnail($post_id) && !$overwrite) {
             return;

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace MP_Importer;
+namespace WP_Sejm_API;
 
 use WP_Error;
 
@@ -9,7 +9,7 @@ class Api_Client
 {
     public function get_term(): int
     {
-        $term = (int) apply_filters('mp_importer_term', 10);
+        $term = (int) apply_filters('wp_sejm_api_term', apply_filters('mp_importer_term', 10));
 
         if ($term < 1) {
             $term = 10;
@@ -20,7 +20,10 @@ class Api_Client
 
     public function get_base_url(): string
     {
-        $base = (string) apply_filters('mp_importer_base_url', 'https://api.sejm.gov.pl/sejm/');
+        $base = (string) apply_filters(
+            'wp_sejm_api_base_url',
+            apply_filters('mp_importer_base_url', 'https://api.sejm.gov.pl/sejm/')
+        );
 
         return untrailingslashit($base);
     }
@@ -40,7 +43,7 @@ class Api_Client
             'timeout' => 15,
             'headers' => [
                 'Accept' => 'application/json',
-                'User-Agent' => 'MP Importer/' . MP_IMPORTER_VERSION . '; ' . home_url('/'),
+                'User-Agent' => 'WordPress Sejm API/' . WP_SEJM_API_VERSION . '; ' . home_url('/'),
             ],
         ]);
 
@@ -52,7 +55,7 @@ class Api_Client
         $body = (string) wp_remote_retrieve_body($response);
 
         if ($status < 200 || $status >= 300) {
-            return new WP_Error('mp_importer_http', 'API request failed.', [
+            return new WP_Error('wp_sejm_api_http', 'API request failed.', [
                 'status' => $status,
                 'body' => $body,
             ]);
@@ -61,7 +64,7 @@ class Api_Client
         $data = json_decode($body, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
-            return new WP_Error('mp_importer_json', 'API response was not valid JSON.');
+            return new WP_Error('wp_sejm_api_json', 'API response was not valid JSON.');
         }
 
         return is_array($data) ? $data : [];
@@ -92,7 +95,10 @@ class Api_Client
         }
 
         $term = $this->get_term();
-        $base = (string) apply_filters('mp_importer_public_profile_base', 'https://www.sejm.gov.pl/');
+        $base = (string) apply_filters(
+            'wp_sejm_api_public_profile_base',
+            apply_filters('mp_importer_public_profile_base', 'https://www.sejm.gov.pl/')
+        );
         $base = untrailingslashit($base);
 
         return $base . '/Sejm' . $term . '.nsf/posel.xsp?id=' . $id;

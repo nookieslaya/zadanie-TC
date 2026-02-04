@@ -15,17 +15,17 @@ $content = (static function (): string {
             <p class="mp-subtitle">Publiczne dane pobrane z API Sejmu.</p>
         </header>
 
-        <?php echo MP_Importer\Grid_Renderer::render_archive(); ?>
+        <?php echo WP_Sejm_API\Grid_Renderer::render_archive(); ?>
     </div>
     <?php
     return (string) ob_get_clean();
 })();
 
-if (MP_Importer\Theme_Compat::render_with_blade('archive-mp', $content)) {
+if (WP_Sejm_API\Theme_Compat::render_with_blade('archive-mp', $content)) {
     return;
 }
 
-MP_Importer\Theme_Compat::header();
+WP_Sejm_API\Theme_Compat::header();
 ?>
 
 <main id="main" class="main">
@@ -33,4 +33,4 @@ MP_Importer\Theme_Compat::header();
 </main>
 
 <?php
-MP_Importer\Theme_Compat::footer();
+WP_Sejm_API\Theme_Compat::footer();

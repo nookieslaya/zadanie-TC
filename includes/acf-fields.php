@@ -1,6 +1,6 @@
 <?php
 
-namespace MP_Importer;
+namespace WP_Sejm_API;
 
 class ACF_Fields
 {
@@ -17,17 +17,17 @@ class ACF_Fields
         }
 
         acf_add_local_field_group([
-            'key' => 'group_mp_importer',
+            'key' => 'group_wp_sejm_api',
             'title' => 'Dane posla',
             'fields' => [
                 [
-                    'key' => 'field_mp_importer_tab_podstawowe',
+                    'key' => 'field_wp_sejm_api_tab_podstawowe',
                     'label' => 'Dane podstawowe',
                     'type' => 'tab',
                     'placement' => 'top',
                 ],
                 [
-                    'key' => 'field_mp_importer_api_id',
+                    'key' => 'field_wp_sejm_api_api_id',
                     'label' => 'ID w API',
                     'name' => 'mp_api_id',
                     'type' => 'number',
@@ -37,21 +37,21 @@ class ACF_Fields
                     'wrapper' => ['width' => '25'],
                 ],
                 [
-                    'key' => 'field_mp_importer_imie',
+                    'key' => 'field_wp_sejm_api_imie',
                     'label' => 'Imie',
                     'name' => 'imie',
                     'type' => 'text',
                     'wrapper' => ['width' => '25'],
                 ],
                 [
-                    'key' => 'field_mp_importer_nazwisko',
+                    'key' => 'field_wp_sejm_api_nazwisko',
                     'label' => 'Nazwisko',
                     'name' => 'nazwisko',
                     'type' => 'text',
                     'wrapper' => ['width' => '25'],
                 ],
                 [
-                    'key' => 'field_mp_importer_pelne_imie_i_nazwisko',
+                    'key' => 'field_wp_sejm_api_pelne_imie_i_nazwisko',
                     'label' => 'Pelne imie i nazwisko',
                     'name' => 'pelne_imie_i_nazwisko',
                     'type' => 'text',
@@ -60,48 +60,48 @@ class ACF_Fields
                     'instructions' => 'Wypelniane automatycznie na podstawie danych z API.',
                 ],
                 [
-                    'key' => 'field_mp_importer_data_urodzenia',
+                    'key' => 'field_wp_sejm_api_data_urodzenia',
                     'label' => 'Data urodzenia',
                     'name' => 'data_urodzenia',
                     'type' => 'text',
                     'wrapper' => ['width' => '25'],
                 ],
                 [
-                    'key' => 'field_mp_importer_miejsce_urodzenia',
+                    'key' => 'field_wp_sejm_api_miejsce_urodzenia',
                     'label' => 'Miejsce urodzenia',
                     'name' => 'miejsce_urodzenia',
                     'type' => 'text',
                     'wrapper' => ['width' => '25'],
                 ],
                 [
-                    'key' => 'field_mp_importer_wojewodztwo',
+                    'key' => 'field_wp_sejm_api_wojewodztwo',
                     'label' => 'Wojewodztwo',
                     'name' => 'wojewodztwo',
                     'type' => 'text',
                     'wrapper' => ['width' => '25'],
                 ],
                 [
-                    'key' => 'field_mp_importer_okreg_wyborczy',
+                    'key' => 'field_wp_sejm_api_okreg_wyborczy',
                     'label' => 'Okreg wyborczy',
                     'name' => 'okreg_wyborczy',
                     'type' => 'text',
                     'wrapper' => ['width' => '50'],
                 ],
                 [
-                    'key' => 'field_mp_importer_tab_mandat',
+                    'key' => 'field_wp_sejm_api_tab_mandat',
                     'label' => 'Mandat',
                     'type' => 'tab',
                     'placement' => 'top',
                 ],
                 [
-                    'key' => 'field_mp_importer_klub_parlamentarny',
+                    'key' => 'field_wp_sejm_api_klub_parlamentarny',
                     'label' => 'Klub parlamentarny',
                     'name' => 'klub_parlamentarny',
                     'type' => 'text',
                     'wrapper' => ['width' => '50'],
                 ],
                 [
-                    'key' => 'field_mp_importer_status_mandatu',
+                    'key' => 'field_wp_sejm_api_status_mandatu',
                     'label' => 'Status mandatu',
                     'name' => 'status_mandatu',
                     'type' => 'text',
@@ -110,14 +110,14 @@ class ACF_Fields
                     'instructions' => 'Wypelniane automatycznie na podstawie pola active z API.',
                 ],
                 [
-                    'key' => 'field_mp_importer_liczba_glosow',
+                    'key' => 'field_wp_sejm_api_liczba_glosow',
                     'label' => 'Liczba glosow',
                     'name' => 'liczba_glosow',
                     'type' => 'number',
                     'wrapper' => ['width' => '25'],
                 ],
                 [
-                    'key' => 'field_mp_importer_kadencja',
+                    'key' => 'field_wp_sejm_api_kadencja',
                     'label' => 'Kadencja',
                     'name' => 'kadencja',
                     'type' => 'text',
@@ -125,32 +125,32 @@ class ACF_Fields
                     'wrapper' => ['width' => '25'],
                 ],
                 [
-                    'key' => 'field_mp_importer_tab_wyksztalcenie',
+                    'key' => 'field_wp_sejm_api_tab_wyksztalcenie',
                     'label' => 'Wyksztalcenie i zawod',
                     'type' => 'tab',
                     'placement' => 'top',
                 ],
                 [
-                    'key' => 'field_mp_importer_wyksztalcenie',
+                    'key' => 'field_wp_sejm_api_wyksztalcenie',
                     'label' => 'Wyksztalcenie',
                     'name' => 'wyksztalcenie',
                     'type' => 'textarea',
                     'rows' => 3,
                 ],
                 [
-                    'key' => 'field_mp_importer_zawod',
+                    'key' => 'field_wp_sejm_api_zawod',
                     'label' => 'Zawod',
                     'name' => 'zawod',
                     'type' => 'text',
                 ],
                 [
-                    'key' => 'field_mp_importer_tab_aktywnosc',
+                    'key' => 'field_wp_sejm_api_tab_aktywnosc',
                     'label' => 'Aktywnosc parlamentarna',
                     'type' => 'tab',
                     'placement' => 'top',
                 ],
                 [
-                    'key' => 'field_mp_importer_komisje_sejmowe',
+                    'key' => 'field_wp_sejm_api_komisje_sejmowe',
                     'label' => 'Komisje sejmowe',
                     'name' => 'komisje_sejmowe',
                     'type' => 'textarea',
@@ -158,7 +158,7 @@ class ACF_Fields
                     'instructions' => 'Po jednej komisji w linii.',
                 ],
                 [
-                    'key' => 'field_mp_importer_funkcje_parlamentarne',
+                    'key' => 'field_wp_sejm_api_funkcje_parlamentarne',
                     'label' => 'Funkcje parlamentarne',
                     'name' => 'funkcje_parlamentarne',
                     'type' => 'textarea',
@@ -166,20 +166,20 @@ class ACF_Fields
                     'instructions' => 'Po jednej funkcji w linii.',
                 ],
                 [
-                    'key' => 'field_mp_importer_tab_kontakt',
+                    'key' => 'field_wp_sejm_api_tab_kontakt',
                     'label' => 'Kontakt i zrodla',
                     'type' => 'tab',
                     'placement' => 'top',
                 ],
                 [
-                    'key' => 'field_mp_importer_email',
+                    'key' => 'field_wp_sejm_api_email',
                     'label' => 'Email',
                     'name' => 'email',
                     'type' => 'email',
                     'wrapper' => ['width' => '50'],
                 ],
                 [
-                    'key' => 'field_mp_importer_link_do_profilu_sejmowego',
+                    'key' => 'field_wp_sejm_api_link_do_profilu_sejmowego',
                     'label' => 'Link do profilu sejmowego',
                     'name' => 'link_do_profilu_sejmowego',
                     'type' => 'url',
@@ -212,7 +212,7 @@ class ACF_Fields
         }
 
         echo '<div class="notice notice-warning"><p>';
-        echo 'MP Importer wymaga wtyczki Advanced Custom Fields (free), aby wyswietlic dodatkowe pola.';
+        echo 'WordPress Sejm API wymaga wtyczki Advanced Custom Fields (free), aby wyswietlic dodatkowe pola.';
         echo '</p></div>';
     }
 }

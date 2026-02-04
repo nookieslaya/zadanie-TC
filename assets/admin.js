@@ -1,11 +1,11 @@
 (() => {
-    const settings = window.MPImporterAdmin || {};
-    const button = document.querySelector('#mp-importer-run');
-    const progress = document.querySelector('#mp-importer-progress');
+    const settings = window.WPSejmApiAdmin || {};
+    const button = document.querySelector('#wp-sejm-api-run');
+    const progress = document.querySelector('#wp-sejm-api-progress');
     const bar = progress ? progress.querySelector('.mp-progress__bar-fill') : null;
     const barWrapper = progress ? progress.querySelector('.mp-progress__bar') : null;
-    const label = document.querySelector('#mp-importer-progress-label');
-    const status = document.querySelector('#mp-importer-status');
+    const label = document.querySelector('#wp-sejm-api-progress-label');
+    const status = document.querySelector('#wp-sejm-api-status');
 
     if (!button) {
         return;
@@ -66,7 +66,7 @@
 
     const runStep = (token, total) => {
         post({
-            action: 'mp_importer_step',
+            action: 'wp_sejm_api_step',
             nonce: settings.nonce,
             token: token,
             batchSize: settings.batchSize || 15,
@@ -110,7 +110,7 @@
         setStatus(settings.strings && settings.strings.starting ? settings.strings.starting : 'Starting import...');
 
         post({
-            action: 'mp_importer_start',
+            action: 'wp_sejm_api_start',
             nonce: settings.nonce,
         })
             .then((response) => {

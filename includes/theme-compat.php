@@ -1,6 +1,6 @@
 <?php
 
-namespace MP_Importer;
+namespace WP_Sejm_API;
 
 class Theme_Compat
 {
@@ -38,7 +38,7 @@ class Theme_Compat
         }
 
         try {
-            echo view('mp-importer::' . $view, [
+            echo view('wp-sejm-api::' . $view, [
                 'content' => $content,
             ])->render();
             return true;
@@ -125,13 +125,13 @@ class Theme_Compat
             return true;
         }
 
-        $views_path = MP_IMPORTER_PATH . 'views';
+        $views_path = WP_SEJM_API_PATH . 'views';
 
         try {
             if (function_exists('app')) {
                 $factory = app('view');
                 if (is_object($factory) && method_exists($factory, 'addNamespace')) {
-                    $factory->addNamespace('mp-importer', $views_path);
+                    $factory->addNamespace('wp-sejm-api', $views_path);
                     self::$blade_namespace_added = true;
                     return true;
                 }
@@ -142,7 +142,7 @@ class Theme_Compat
         try {
             $factory = view();
             if (is_object($factory) && method_exists($factory, 'addNamespace')) {
-                $factory->addNamespace('mp-importer', $views_path);
+                $factory->addNamespace('wp-sejm-api', $views_path);
                 self::$blade_namespace_added = true;
                 return true;
             }

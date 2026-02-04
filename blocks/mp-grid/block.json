@@ -1,11 +1,11 @@
 {
   "apiVersion": 2,
-  "name": "mp-importer/mp-grid",
+  "name": "wp-sejm-api/mp-grid",
   "title": "MPs Grid",
   "category": "widgets",
   "icon": "id",
   "description": "Displays a grid of Members of Parliament.",
-  "textdomain": "mp-importer",
+  "textdomain": "wp-sejm-api",
   "attributes": {
     "postsPerPage": {
       "type": "number",
@@ -26,7 +26,7 @@
   "supports": {
     "html": false
   },
-  "editorScript": "mp-importer-mp-grid-editor",
-  "style": "mp-importer",
-  "editorStyle": "mp-importer"
+  "editorScript": "wp-sejm-api-mp-grid-editor",
+  "style": "wp-sejm-api",
+  "editorStyle": "wp-sejm-api"
 }

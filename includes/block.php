@@ -1,6 +1,6 @@
 <?php
 
-namespace MP_Importer;
+namespace WP_Sejm_API;
 
 class Block
 {
@@ -16,22 +16,55 @@ class Block
         }
 
         wp_register_style(
-            'mp-importer',
-            MP_IMPORTER_URL . 'assets/style.css',
+            'wp-sejm-api',
+            WP_SEJM_API_URL . 'assets/style.css',
             [],
-            MP_IMPORTER_VERSION
+            WP_SEJM_API_VERSION
         );
 
         wp_register_script(
-            'mp-importer-mp-grid-editor',
-            MP_IMPORTER_URL . 'blocks/mp-grid/index.js',
+            'wp-sejm-api-mp-grid-editor',
+            WP_SEJM_API_URL . 'blocks/mp-grid/index.js',
             ['wp-blocks', 'wp-element', 'wp-components', 'wp-i18n', 'wp-block-editor'],
-            MP_IMPORTER_VERSION,
+            WP_SEJM_API_VERSION,
             true
         );
 
-        register_block_type(MP_IMPORTER_PATH . 'blocks/mp-grid/block.json', [
+        register_block_type(WP_SEJM_API_PATH . 'blocks/mp-grid/block.json', [
             // Dynamic block keeps pagination and filtering on the server and avoids duplicate markup logic.
+            'render_callback' => [__CLASS__, 'render'],
+        ]);
+
+        // Legacy block name for backward compatibility.
+        register_block_type('mp-importer/mp-grid', [
+            'api_version' => 2,
+            'title' => 'MPs Grid (legacy)',
+            'category' => 'widgets',
+            'icon' => 'id',
+            'attributes' => [
+                'postsPerPage' => [
+                    'type' => 'number',
+                    'default' => 12,
+                ],
+                'enablePagination' => [
+                    'type' => 'boolean',
+                    'default' => true,
+                ],
+                'enableFilters' => [
+                    'type' => 'boolean',
+                    'default' => true,
+                ],
+                'limit' => [
+                    'type' => 'number',
+                ],
+            ],
+            'supports' => [
+                'html' => false,
+                'inserter' => false,
+            ],
+            'style' => 'wp-sejm-api',
+            'editor_style' => 'wp-sejm-api',
+            'editor_script' => 'wp-sejm-api-mp-grid-editor',
             'render_callback' => [__CLASS__, 'render'],
         ]);
     }

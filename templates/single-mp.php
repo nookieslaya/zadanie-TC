@@ -9,18 +9,18 @@ $content = (static function (): string {
     ?>
     <div class="mp-single">
         <div class="mp-container">
-            <?php echo MP_Importer\Single_Renderer::render(); ?>
+            <?php echo WP_Sejm_API\Single_Renderer::render(); ?>
         </div>
     </div>
     <?php
     return (string) ob_get_clean();
 })();
 
-if (MP_Importer\Theme_Compat::render_with_blade('single-mp', $content)) {
+if (WP_Sejm_API\Theme_Compat::render_with_blade('single-mp', $content)) {
     return;
 }
 
-MP_Importer\Theme_Compat::header();
+WP_Sejm_API\Theme_Compat::header();
 ?>
 
 <main id="main" class="main">
@@ -28,4 +28,4 @@ MP_Importer\Theme_Compat::header();
 </main>
 
 <?php
-MP_Importer\Theme_Compat::footer();
+WP_Sejm_API\Theme_Compat::footer();

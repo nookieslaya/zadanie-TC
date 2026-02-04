@@ -1,4 +1,4 @@
-# MP Importer
+﻿# WordPress Sejm API – Recruitment Task
 
 Wtyczka WordPress do importu i prezentacji posłów na Sejm RP na podstawie publicznego API Sejmu.
 
@@ -15,13 +15,13 @@ Wtyczka WordPress do importu i prezentacji posłów na Sejm RP na podstawie publ
 - Advanced Custom Fields (wersja darmowa)
 
 ## Instalacja
-1. Skopiuj katalog `mp-importer` do `wp-content/plugins/`.
+1. Skopiuj katalog `wp-sejm-api` do `wp-content/plugins/`.
 2. Aktywuj wtyczkę w panelu WordPress.
 3. Upewnij się, że ACF jest aktywne.
 
 ## Jak używać
 ### Import danych
-W panelu: **Posłowie → MP Importer**  
+W panelu: **Posłowie → WordPress Sejm API**  
 Kliknij **Import / Refresh MPs** i poczekaj na zakończenie.
 
 ### Siatka posłów (blok)
@@ -45,9 +45,9 @@ Wtyczka rejestruje pola w języku polskim, m.in.:
 - email, link_do_profilu_sejmowego
 
 ## Dostosowanie
-- Zmiana kadencji: filtr `mp_importer_term`
-- Zmiana bazowego adresu profilu Sejmu: `mp_importer_public_profile_base`
-- Zmiana URL API: `mp_importer_base_url`
+- Zmiana kadencji: filtr `wp_sejm_api_term`
+- Zmiana bazowego adresu profilu Sejmu: `wp_sejm_api_public_profile_base`
+- Zmiana URL API: `wp_sejm_api_base_url`
 
 ## Uwagi techniczne
 - Szablony są w `templates/` oraz `views/` (dla motywów Blade).
