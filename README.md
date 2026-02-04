@@ -1,13 +1,13 @@
 # MP Importer
 
-Wtyczka WordPress do importu i prezentacji poslow na Sejm RP na podstawie publicznego API Sejmu.
+Wtyczka WordPress do importu i prezentacji posłów na Sejm RP na podstawie publicznego API Sejmu.
 
-## Najwazniejsze funkcje
-- Rejestruje CPT `mp` (posel).
+## Najważniejsze funkcje
+- Rejestruje CPT `mp` (poseł).
 - Importuje dane z API Sejmu i zapisuje je w ACF.
-- Dodaje blok Gutenberga **MPs Grid** (siatka poslow).
-- Renderuje czytelne strony pojedynczego posla.
-- Dziala z motywami klasycznymi, builderami i motywami Blade/Sage.
+- Dodaje blok Gutenberga **MPs Grid** (siatka posłów).
+- Renderuje czytelne strony pojedynczego posła.
+- Działa z motywami klasycznymi, builderami i motywami Blade/Sage.
 
 ## Wymagania
 - WordPress 6.x
@@ -16,31 +16,31 @@ Wtyczka WordPress do importu i prezentacji poslow na Sejm RP na podstawie public
 
 ## Instalacja
 1. Skopiuj katalog `mp-importer` do `wp-content/plugins/`.
-2. Aktywuj wtyczke w panelu WordPress.
-3. Upewnij sie, ze ACF jest aktywne.
+2. Aktywuj wtyczkę w panelu WordPress.
+3. Upewnij się, że ACF jest aktywne.
 
-## Jak uzywac
+## Jak używać
 ### Import danych
-W panelu: **Poslowie → MP Importer**  
-Kliknij **Import / Refresh MPs** i poczekaj na zakonczenie.
+W panelu: **Posłowie → MP Importer**  
+Kliknij **Import / Refresh MPs** i poczekaj na zakończenie.
 
-### Siatka poslow (blok)
+### Siatka posłów (blok)
 Dodaj blok **MPs Grid** na dowolnej stronie.
 Blok wspiera:
-- paginacje
-- filtry (klub, okreg, imie i nazwisko)
+- paginację
+- filtry (klub, okręg, imię i nazwisko)
 
-### Strony pojedynczych poslow
-Link do posla ma postac:
-- `/mp/{slug}` (domyslnie)
-- lub `/twoja-strona/{slug}` jezeli blok jest na stronie bazowej
+### Strony pojedynczych posłów
+Link do posła ma postać:
+- `/mp/{slug}` (domyślnie)
+- lub `/twoja-strona/{slug}` jeżeli blok jest na stronie bazowej
 
 ## Struktura danych (ACF)
-Wtyczka rejestruje pola w jezyku polskim, m.in.:
-- imie, nazwisko, pelne_imie_i_nazwisko
-- data_urodzenia, miejsce_urodzenia, wojewodztwo
-- okreg_wyborczy, klub_parlamentarny, status_mandatu, liczba_glosow
-- wyksztalcenie, zawod
+Wtyczka rejestruje pola w języku polskim, m.in.:
+- imię, nazwisko, pełne_imie_i_nazwisko
+- data_urodzenia, miejsce_urodzenia, województwo
+- okręg_wyborczy, klub_parlamentarny, status_mandatu, liczba_głosów
+- wykształcenie, zawód
 - komisje_sejmowe, funkcje_parlamentarne
 - email, link_do_profilu_sejmowego
 
@@ -50,9 +50,9 @@ Wtyczka rejestruje pola w jezyku polskim, m.in.:
 - Zmiana URL API: `mp_importer_base_url`
 
 ## Uwagi techniczne
-- Szablony sa w `templates/` oraz `views/` (dla motywow Blade).
+- Szablony są w `templates/` oraz `views/` (dla motywów Blade).
 - Logika jest w `includes/`.
 - Wtyczka nie wymaga page template.
 
-## Support
-W razie problemow: sprawdz logi PHP oraz status API `api.sejm.gov.pl`.
+## Wsparcie
+W razie problemów: sprawdź logi PHP oraz status API `api.sejm.gov.pl`.
