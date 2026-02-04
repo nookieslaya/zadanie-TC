@@ -29,6 +29,7 @@ require_once WP_SEJM_API_PATH . 'includes/seo.php';
 require_once WP_SEJM_API_PATH . 'includes/template-loader.php';
 require_once WP_SEJM_API_PATH . 'includes/template-tags.php';
 require_once WP_SEJM_API_PATH . 'includes/block.php';
+require_once WP_SEJM_API_PATH . 'includes/block-templates.php';
 require_once WP_SEJM_API_PATH . 'includes/grid-renderer.php';
 require_once WP_SEJM_API_PATH . 'includes/single-renderer.php';
 
@@ -39,6 +40,7 @@ WP_Sejm_API\Base_Page::init();
 WP_Sejm_API\SEO::init();
 WP_Sejm_API\Template_Loader::init();
 WP_Sejm_API\Block::init();
+WP_Sejm_API\Block_Templates::init();
 
 register_activation_hook(__FILE__, function (): void {
     WP_Sejm_API\Post_Type::register();

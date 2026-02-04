@@ -1,0 +1,15 @@
+{
+  "apiVersion": 2,
+  "name": "wp-sejm-api/mp-single",
+  "title": "MP Profile",
+  "category": "widgets",
+  "icon": "id",
+  "description": "Displays a single MP profile.",
+  "textdomain": "wp-sejm-api",
+  "supports": {
+    "html": false
+  },
+  "editorScript": "wp-sejm-api-mp-single-editor",
+  "style": "wp-sejm-api",
+  "editorStyle": "wp-sejm-api"
+}
