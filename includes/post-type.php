@@ -17,18 +17,18 @@ class Post_Type
         $slug = $slug !== '' ? $slug : 'mp';
 
         $labels = [
-            'name' => 'Members of Parliament',
-            'singular_name' => 'Member of Parliament',
-            'add_new_item' => 'Add New MP',
-            'edit_item' => 'Edit MP',
-            'new_item' => 'New MP',
-            'view_item' => 'View MP',
-            'search_items' => 'Search MPs',
-            'not_found' => 'No MPs found',
-            'not_found_in_trash' => 'No MPs found in Trash',
-            'all_items' => 'All MPs',
-            'archives' => 'MP Archives',
-            'menu_name' => 'MPs',
+            'name' => 'Posłowie',
+            'singular_name' => 'Poseł',
+            'add_new_item' => 'Dodaj posła',
+            'edit_item' => 'Edytuj posła',
+            'new_item' => 'Nowy poseł',
+            'view_item' => 'Zobacz posła',
+            'search_items' => 'Szukaj posłów',
+            'not_found' => 'Nie znaleziono posłów',
+            'not_found_in_trash' => 'Brak posłów w koszu',
+            'all_items' => 'Wszyscy posłowie',
+            'archives' => 'Archiwum posłów',
+            'menu_name' => 'Posłowie',
         ];
 
         $args = [
