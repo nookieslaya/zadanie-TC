@@ -15,11 +15,14 @@ class Block
             return;
         }
 
+        $style_path = WP_SEJM_API_PATH . 'assets/style.css';
+        $style_ver = file_exists($style_path) ? (string) filemtime($style_path) : WP_SEJM_API_VERSION;
+
         wp_register_style(
             'wp-sejm-api',
             WP_SEJM_API_URL . 'assets/style.css',
             [],
-            WP_SEJM_API_VERSION
+            $style_ver
         );
 
         wp_register_script(
@@ -101,6 +104,6 @@ class Block
             return '';
         }
 
-        return '<div class="mp-single"><div class="mp-container">' . $html . '</div></div>';
+        return '<div class="mp-single"><div class="mp-container alignfull">' . $html . '</div></div>';
     }
 }

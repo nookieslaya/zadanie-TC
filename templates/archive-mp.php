@@ -8,7 +8,7 @@ $content = (static function (): string {
     ob_start();
     ?>
     <div class="mp-archive">
-        <header class="mp-archive__header mp-container">
+        <header class="mp-archive__header mp-container alignfull">
             <h1 class="mp-title">
                 <?php echo esc_html(post_type_archive_title('', false) ?: 'Poslowie'); ?>
             </h1>

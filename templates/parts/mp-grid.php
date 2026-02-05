@@ -11,8 +11,8 @@ $filter_action = $filters['action'] ?? '';
 $filter_reset = $filters['reset_url'] ?? $filter_action;
 ?>
 
-<section class="mp-grid-wrapper">
-    <div class="mp-container">
+<section class="mp-grid-wrapper alignfull">
+    <div class="mp-container alignfull">
         <?php if ($filters_enabled) : ?>
             <form class="mp-grid-filters" method="get" action="<?php echo esc_url($filter_action); ?>">
                 <div class="mp-grid-filters__field">

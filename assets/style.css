@@ -16,16 +16,38 @@ body.single-mp {
 .mp-single {
     background: var(--mp-bg);
     color: var(--mp-text);
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 
 .mp-container {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 3.5rem 1.5rem;
+    max-width: 1100px !important;
+    margin: 0 auto !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
+
 .mp-container .mp-profile{
-    max-width: 1100px;
-    margin: 0 auto;
+    max-width: 1100px !important;
+    margin: 20px auto !important;
+}
+
+.entry-content .mp-container {
+    width: 100% !important;
+    max-width: 1100px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Block theme: prevent negative margins from alignfull on our wrappers. */
+.has-global-padding > .mp-grid-wrapper.alignfull,
+.has-global-padding > .mp-container.alignfull,
+.has-global-padding > .wp-block-post-content > .mp-grid-wrapper.alignfull,
+.has-global-padding > .wp-block-post-content > .mp-container.alignfull,
+.entry-content.has-global-padding > .mp-grid-wrapper.alignfull,
+.entry-content.has-global-padding > .mp-container.alignfull {
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 .mp-title {
@@ -42,12 +64,23 @@ body.single-mp {
 .mp-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 320px));
-    justify-content: start;
+    justify-content: center;
     gap: 1.5rem;
 }
 
 .mp-grid-wrapper .mp-container {
     padding-top: 0;
+}
+
+/* Ensure grid wrapper can be full-width even inside block theme constrained layouts. */
+.is-layout-constrained > .mp-grid-wrapper {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100%;
+}
+section.mp-grid-wrapper {
+    max-width: 100%!important;
 }
 
 .mp-grid-filters {

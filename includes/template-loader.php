@@ -53,11 +53,19 @@ class Template_Loader
             return;
         }
 
+        if (wp_style_is('wp-sejm-api', 'registered')) {
+            wp_enqueue_style('wp-sejm-api');
+            return;
+        }
+
+        $style_path = WP_SEJM_API_PATH . 'assets/style.css';
+        $style_ver = file_exists($style_path) ? (string) filemtime($style_path) : WP_SEJM_API_VERSION;
+
         wp_enqueue_style(
             'wp-sejm-api',
             WP_SEJM_API_URL . 'assets/style.css',
             [],
-            WP_SEJM_API_VERSION
+            $style_ver
         );
     }
 }

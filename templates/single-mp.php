@@ -8,7 +8,7 @@ $content = (static function (): string {
     ob_start();
     ?>
     <div class="mp-single">
-        <div class="mp-container">
+        <div class="mp-container alignfull">
             <?php echo WP_Sejm_API\Single_Renderer::render(); ?>
         </div>
     </div>
